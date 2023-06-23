@@ -14,20 +14,7 @@ import './App.css';
 
 function App() {
 
-  const [apartmentsArr, setApartmentsArr] = useState(null);
-
-  useEffect(() => {
-    getApartmentsFromApi();
-  }, []);
-  
-
-  const getApartmentsFromApi = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/apartments`)
-      .then(response => {
-        setApartmentsArr(response.data);
-      })
-      .catch(e => console.log(e))
-  }
+ 
 
 
 
@@ -40,8 +27,8 @@ function App() {
 
     <Routes>
         <Route path='/' element={<HomePage/>} />
-        <Route path='/apartments' element={<ApartmentsList apartmentsArr={apartmentsArr}/>} />
-        <Route path='/apartments/create' element={<CreateApartment callbackToUpdateList={getApartmentsFromApi}/>} />
+        <Route path='/apartments' element={<ApartmentsList />} />
+        <Route path='/apartments/create' element={<CreateApartment />} />
         <Route path='/apartments/:id' element={<ApartmentDetails />} />
         
      </Routes> 

@@ -1,15 +1,31 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
-function ApartmentsList(props) {
+function ApartmentsList() {
+
+
+  const [apartmentsArr, setApartmentsArr] = useState(null);
+
+  useEffect(() => {
+    getApartmentsFromApi();
+  }, []);
+  
+
+  const getApartmentsFromApi = () => {
+    axios.get(`${process.env.REACT_APP_API_URL}/apartments`)
+      .then(response => {
+        setApartmentsArr(response.data);
+      })
+      .catch(e => console.log(e))
+  }
 
     const renderListOfApartments = () => {
-        if(props.apartmentsArr === null){
+        if(apartmentsArr === null){
           return <p>loading....</p>;
         } else {
-          return props.apartmentsArr.map((apartmentObj) => {
+          return apartmentsArr.map((apartmentObj) => {
             return (
               <div key={apartmentObj._id} className="character box">
                 <img src={apartmentObj.img} alt="apartment" className="img"/> <br />
